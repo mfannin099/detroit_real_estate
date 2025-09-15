@@ -1,0 +1,9 @@
+Link to Detroit Property Sales data - https://data.detroitmi.gov/datasets/d26fda1e80b04630a6e56627e6fbceb8_0/explore?location=42.321385%2C-82.706019%2C8.45
+
+AirRoi - Detroit - https://www.airroi.com/data-portal/markets/detroit-united-states
+    Available Datasets:
+        - Listings Data (Downloaded 9.15.2025)
+        - Past Calendar Rates
+        - Future Calendar Rates
+        - Reviews Data
+        - Host Data
