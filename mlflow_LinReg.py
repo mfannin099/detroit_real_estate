@@ -1,7 +1,10 @@
+## To launch mlflow ui - mlflow ui
+
+
 import pandas as pd
 import numpy as np
 import mlflow 
-import mlfow.sklearn
+import mlflow.sklearn
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -40,10 +43,10 @@ def clean_data(df):
 
     return df
 
-def fit_model(X,y, experiment_name):
+def fit_model(X,y, experiment_name, run_name=None):
 
     mlflow.set_experiment(experiment_name)
-    with mlflow.start_run():
+    with mlflow.start_run(run_name=run_name):
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
         # Mlflow logs
@@ -68,6 +71,9 @@ def fit_model(X,y, experiment_name):
         mlflow.log_metric("mse", mse)
         mlflow.log_metric("rmse", rmse)
 
+        # Log the model (IMPORTANT!)
+        mlflow.sklearn.log_model(model, "linear_regression_model")
+
         # # Inspect the learned formula: y = mx + b
         # print(f"Coefficient (slope): {model.coef_}")
         # print(f"Intercept: {model.intercept_}")
@@ -84,10 +90,46 @@ def fit_model(X,y, experiment_name):
 
 df = clean_data(df)
 print(df.shape)
+EXPERIMENT_NAME = "detroit_property_sales_"
 
-
+## Begin model experiments
 # Initial Model
 X = df[['month']]
 y = df[['Sale Price']]
 
-fit_model(X,y, "run1")
+fit_model(X,y, EXPERIMENT_NAME, run_name='Baseline_month_only')
+
+# Model 2
+X = df[['month', 'year']]
+y = df[['Sale Price']]
+
+X = X.fillna(0)
+fit_model(X,y, EXPERIMENT_NAME, run_name='month_and_year')
+
+# Model 3
+X = df[['month', 'year', 'Latitude', 'Longitude']]
+y = df[['Sale Price']]
+
+X = X.fillna(0)
+fit_model(X,y, EXPERIMENT_NAME, run_name='month_and_year_lat_long')
+
+# Model 4
+X = df[['month', 'year', 'Latitude', 'Longitude', "Zip Code"]]
+y = df[['Sale Price']]
+
+X = X.fillna(0)
+fit_model(X,y, EXPERIMENT_NAME, run_name='month_and_year_lat_long_zipcode')
+
+# Model 5
+X = df[['month', 'year', 'Latitude', 'Longitude', 'Zip Code', 'Neighborhood_Encoded']]
+y = df[['Sale Price']]
+
+X = X.fillna(0)
+fit_model(X,y, EXPERIMENT_NAME, run_name='date_location_neighborhood')
+
+# Model 6
+X = df[['month', 'year', 'Latitude', 'Longitude', 'Zip Code', 'Neighborhood_Encoded', 'Street_Name_Encoded']]
+y = df[['Sale Price']]
+
+X = X.fillna(0)
+fit_model(X,y, EXPERIMENT_NAME, run_name='date_location_neighborhood_street')

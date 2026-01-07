@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/matt/Desktop/DataProjects/detroit_property_prices/mlruns/0/927b47c731484368bcdb5da44f266447/artifacts
+end_time: 1767753702613
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 927b47c731484368bcdb5da44f266447
+run_name: month_and_year
+run_uuid: 927b47c731484368bcdb5da44f266447
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1767753700035
+status: 3
+tags: []
+user_id: matt
