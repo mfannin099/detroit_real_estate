@@ -1,5 +1,7 @@
 ##TODO: Allow for selection of individual rows
 ##TODO: Map of lat, long of flitered df
+##TODO: Correlation matrix... with the rating columns...?
+##TODO: allow for df sorting
 ##TODO: do something along the lines of.... viewing n listings of len(original_df)
 
 ##TODO: Read more about callback
