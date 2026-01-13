@@ -71,3 +71,24 @@ h2 {
 .dash-spreadsheet tr:nth-child(even) {
     background-color: #fafbfc;
 }
+
+/* Filter container */
+.filters-container {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    gap: 15px;
+}
+
+.filter-item {
+    flex: 1;
+}
+
+.filter-item label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #2c3e50;
+}
