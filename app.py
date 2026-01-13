@@ -1,9 +1,16 @@
+##TODO: Allow for selection of individual rows
+##TODO: Map of lat, long of flitered df
+##TODO: do something along the lines of.... viewing n listings of len(original_df)
+
+##TODO: Read more about callback
+
 from dash import Dash, html, dcc, dash_table, callback, Output, Input
 import plotly.express as px
 import pandas as pd
  
 # Reading in data
 df = pd.read_parquet("data/airroi_listings.parquet")
+# TODO: Better drop columns (drop more columns)
 df = df.drop(columns=['cover_photo_url'])
 
 app = Dash(__name__) # creates your Dash application object. Think of it as turning on your dashboard. (Per Claude)
@@ -12,15 +19,24 @@ app = Dash(__name__) # creates your Dash application object. Think of it as turn
 app.layout = html.Div([
     html.H1("Detroit Airbnb Listings Dash Application"),
 
+    html.H2([
+        html.A(
+        "Dataset Schema & Download →",
+        href="https://www.airroi.com/data-portal/markets/detroit-united-states",
+        target="_blank",
+        className="data-link"
+    )
+    ]),
+
     # Filters section
     html.Div([
         html.Div([
-            html.Label("Room Type:"),
+            html.Label("Listing Type:"),
             dcc.Dropdown(
-                id='room-type-filter',
+                id='listing-type',
                 options=[{'label': rt, 'value': rt} for rt in df['room_type'].unique()],
                 value=None,
-                placeholder="All Room Types"
+                placeholder="All Listing Types"
             )
         ], className='filter-item'),
         
@@ -63,16 +79,8 @@ app.layout = html.Div([
         ], className='filter-item')
     ], className='filters-container'),
 
-    html.H2([
-        html.A(
-            "Dataset Schema & Download →",
-            href="https://www.airroi.com/data-portal/markets/detroit-united-states",
-            target="_blank",
-            className="data-link"
-        )
-    ]),
-
     dash_table.DataTable(
+    id='listings-table', 
         data=df.to_dict('records'),
         columns=[{'name': col, 'id': col} for col in df.columns],
         page_size=10,
@@ -84,7 +92,7 @@ app.layout = html.Div([
 
 @callback(
     Output('listings-table', 'data'),
-    Input('room-type-filter', 'value'),
+    Input('listing-type-filter', 'value'),
     Input('superhost-filter', 'value'),
     Input('bedrooms-filter', 'value'),
     Input('baths-filter', 'value')
