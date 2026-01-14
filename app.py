@@ -13,7 +13,7 @@ print(df.columns)
 # TODO: Better drop columns (drop more columns)
 df = df.drop(columns=['cover_photo_url'])
 # Fill NaN values with 0
-df['bedrooms'] = df['bedrooms'].fillna(0)
+df['bedrooms'] = df['bedrooms'].fillna(0).astype(int)
 df['baths'] = df['baths'].fillna(0)
 
 app = Dash(__name__) # creates your Dash application object. Think of it as turning on your dashboard. (Per Claude)
@@ -99,11 +99,13 @@ app.layout = html.Div([
     # Text to display number of rows filtered to
     html.Div(id='row-count-display'),
 
+    html.Hr(),
+
     # Map container
     html.Div([
         html.H3("Listing Locations"),
         dcc.Graph(id='listings-map')
-    ]),
+    ], className = 'map-container'),
 
 ])
 
@@ -120,6 +122,10 @@ def filter_table(listing_type, superhost, bedrooms_range, baths_range):
     
     if listing_type:
         filtered_df = filtered_df[filtered_df['listing_type'] == listing_type]
+
+    # Default to 'all' if superhost is None
+    if superhost is None:
+        superhost = 'all'
     
     if superhost != 'all':
         filtered_df = filtered_df[filtered_df['superhost'] == superhost]
