@@ -1,8 +1,6 @@
 ##TODO: Allow for selection of individual rows
 ##TODO: Map of lat, long of flitered df
 ##TODO: Correlation matrix... with the rating columns...?
-##TODO: allow for df sorting
-##TODO: do something along the lines of.... viewing n listings of len(original_df)
 
 from dash import Dash, html, dcc, dash_table, callback, Output, Input
 import plotly.express as px
@@ -91,7 +89,9 @@ app.layout = html.Div([
         data=df.to_dict('records'),
         columns=[{'name': col, 'id': col} for col in df.columns],
         page_size=10,
-        style_table={'overflowX': 'auto'}
+        style_table={'overflowX': 'auto'},
+        sort_action='native',
+        sort_mode='multi'
     ),
 
     # Text to display number of rows filtered to
