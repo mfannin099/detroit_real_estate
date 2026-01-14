@@ -92,3 +92,12 @@ h2 {
     font-weight: 500;
     color: #2c3e50;
 }
+
+#row-count-display {
+    font-weight: 500;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    margin: 15px auto;
+    max-width: 300px;
+}

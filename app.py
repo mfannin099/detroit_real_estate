@@ -4,8 +4,6 @@
 ##TODO: allow for df sorting
 ##TODO: do something along the lines of.... viewing n listings of len(original_df)
 
-##TODO: Read more about callback
-
 from dash import Dash, html, dcc, dash_table, callback, Output, Input
 import plotly.express as px
 import pandas as pd
@@ -14,13 +12,19 @@ import pandas as pd
 df = pd.read_parquet("data/airroi_listings.parquet")
 # TODO: Better drop columns (drop more columns)
 df = df.drop(columns=['cover_photo_url'])
+# Fill NaN values with 0
+df['bedrooms'] = df['bedrooms'].fillna(0)
+df['baths'] = df['baths'].fillna(0)
 
 app = Dash(__name__) # creates your Dash application object. Think of it as turning on your dashboard. (Per Claude)
 
 # Define the layout
 app.layout = html.Div([
+
+    # Header 1
     html.H1("Detroit Airbnb Listings Dash Application"),
 
+    # Link to Schema and data
     html.H2([
         html.A(
         "Dataset Schema & Download →",
@@ -81,13 +85,17 @@ app.layout = html.Div([
         ], className='filter-item')
     ], className='filters-container'),
 
+    # Element for the Datatable
     dash_table.DataTable(
     id='listings-table', 
         data=df.to_dict('records'),
         columns=[{'name': col, 'id': col} for col in df.columns],
         page_size=10,
         style_table={'overflowX': 'auto'}
-    )
+    ),
+
+    # Text to display number of rows filtered to
+    html.Div(id='row-count-display')
 
 ])
 
@@ -119,6 +127,15 @@ def filter_table(listing_type, superhost, bedrooms_range, baths_range):
     ]
     
     return filtered_df.to_dict('records')
+
+@callback(
+    Output('row-count-display', 'children'),
+    Input('listings-table', 'data')
+)
+def update_row_count(filtered_data):
+    num_filtered = len(filtered_data)
+    total = len(df)
+    return f"Viewing {num_filtered:,} of {total:,} listings"
 
 
 if __name__ == '__main__': # This checks if you ran this file directly (like python app.py). If you imported this file into another file, this block won't run. (Per Claude)
