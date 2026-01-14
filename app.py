@@ -35,8 +35,8 @@ app.layout = html.Div([
         html.Div([
             html.Label("Listing Type:"),
             dcc.Dropdown(
-                id='listing-type',
-                options=[{'label': rt, 'value': rt} for rt in df['room_type'].unique()],
+                id='listing-type-filter',
+                options=[{'label': lt, 'value': lt} for lt in df['listing_type'].unique()],
                 value=None,
                 placeholder="All Listing Types"
             )
@@ -92,18 +92,18 @@ app.layout = html.Div([
 ])
 
 
-@callback(
+@callback( # Decorator states that when one of the Inputs change, the function is ran
     Output('listings-table', 'data'),
     Input('listing-type-filter', 'value'),
     Input('superhost-filter', 'value'),
     Input('bedrooms-filter', 'value'),
     Input('baths-filter', 'value')
 )
-def filter_table(room_type, superhost, bedrooms_range, baths_range):
+def filter_table(listing_type, superhost, bedrooms_range, baths_range):
     filtered_df = df.copy()
     
-    if room_type:
-        filtered_df = filtered_df[filtered_df['room_type'] == room_type]
+    if listing_type:
+        filtered_df = filtered_df[filtered_df['listing_type'] == listing_type]
     
     if superhost != 'all':
         filtered_df = filtered_df[filtered_df['superhost'] == superhost]
