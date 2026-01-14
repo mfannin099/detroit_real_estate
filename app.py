@@ -1,6 +1,9 @@
-##TODO: Allow for selection of individual rows
-##TODO: Map of lat, long of flitered df
-##TODO: Correlation matrix... with the rating columns...?
+##TODO: what leads to success section.... Correlation matrix... with the rating columns...?
+##TODO: Button to reset all filters back to empty
+##TODO: Better drop columns (drop more columns)... clean original df that is being displayed
+##TODO: Create some KPI's (under filers)
+##TODO: How much will my airbnb make section.... Simple model that serves predictions (bedroom, bath, guests, ratings etc... to predict revenue over last 12 months.... probalistic modeling.. multiple models, etc )
+
 
 from dash import Dash, html, dcc, dash_table, callback, Output, Input
 import plotly.express as px
@@ -10,7 +13,6 @@ import pandas as pd
 df = pd.read_parquet("data/airroi_listings.parquet")
 print(df.columns)
 
-# TODO: Better drop columns (drop more columns)
 df = df.drop(columns=['cover_photo_url'])
 # Fill NaN values with 0
 df['bedrooms'] = df['bedrooms'].fillna(0).astype(int)
