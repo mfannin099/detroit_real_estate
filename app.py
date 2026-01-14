@@ -8,6 +8,8 @@ import pandas as pd
  
 # Reading in data
 df = pd.read_parquet("data/airroi_listings.parquet")
+print(df.columns)
+
 # TODO: Better drop columns (drop more columns)
 df = df.drop(columns=['cover_photo_url'])
 # Fill NaN values with 0
@@ -95,7 +97,13 @@ app.layout = html.Div([
     ),
 
     # Text to display number of rows filtered to
-    html.Div(id='row-count-display')
+    html.Div(id='row-count-display'),
+
+    # Map container
+    html.Div([
+        html.H3("Listing Locations"),
+        dcc.Graph(id='listings-map')
+    ]),
 
 ])
 
@@ -136,6 +144,48 @@ def update_row_count(filtered_data):
     num_filtered = len(filtered_data)
     total = len(df)
     return f"Viewing {num_filtered:,} of {total:,} listings"
+
+
+@callback(
+    Output('listings-map', 'figure'),
+    Input('listings-table', 'data')
+)
+def update_map(filtered_data):
+    # Convert filtered data back to DataFrame
+    filtered_df = pd.DataFrame(filtered_data)
+    
+    # Create the map
+    fig = px.scatter_mapbox(
+        filtered_df,
+        lat='latitude',
+        lon='longitude',
+        hover_name='listing_name',
+        hover_data={
+            'listing_type': True,
+            'bedrooms': True,
+            'baths': True,
+            'rating_overall': ':.2f',  # Format to 2 decimals
+            'latitude': False,  # Hide lat/lon in hover
+            'longitude': False
+        },
+        zoom=10,
+        height=600,
+    )
+    
+    # Use OpenStreetMap style (free, no token needed)
+    fig.update_layout(
+        mapbox_style="open-street-map",
+        margin={"r": 0, "t": 0, "l": 0, "b": 0}
+    )
+
+    fig.update_traces(
+        marker=dict(
+            size=12,  # Fixed size for all markers
+            opacity=0.8,  # Slight transparency
+        )
+    )
+    
+    return fig
 
 
 if __name__ == '__main__': # This checks if you ran this file directly (like python app.py). If you imported this file into another file, this block won't run. (Per Claude)
