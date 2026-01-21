@@ -1,5 +1,4 @@
 ##TODO: what leads to success section.... Correlation matrix... with the rating columns...?
-##TODO: Button to reset all filters back to empty
 ##TODO: Better drop columns (drop more columns)... clean original df that is being displayed
 ##TODO: How much will my airbnb make section.... Simple model that serves predictions (bedroom, bath, guests, ratings etc... to predict revenue over last 12 months.... probalistic modeling.. multiple models, etc )
 
@@ -7,15 +6,14 @@
 from dash import Dash, html, dcc, dash_table, callback, Output, Input
 import plotly.express as px
 import pandas as pd
+from utils import DataCleaner
  
 # Reading in data
-df = pd.read_parquet("data/airroi_listings.parquet")
-print(df.columns)
-
-df = df.drop(columns=['cover_photo_url'])
-# Fill NaN values with 0
-df['bedrooms'] = df['bedrooms'].fillna(0).astype(int)
-df['baths'] = df['baths'].fillna(0)
+df = (DataCleaner("../data/airroi_listings.parquet")
+      .load_data()
+      .drop_columns()
+      .clean_columns()
+      .get_final_df())
 
 app = Dash(__name__) # creates your Dash application object. Think of it as turning on your dashboard. (Per Claude)
 
