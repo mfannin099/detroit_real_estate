@@ -1,4 +1,3 @@
-##TODO: what leads to success section.... Correlation matrix... with the rating columns...?
 ##TODO: How much will my airbnb make section.... Simple model that serves predictions (bedroom, bath, guests, ratings etc... to predict revenue over last 12 months.... probalistic modeling.. multiple models, etc )
 
 
