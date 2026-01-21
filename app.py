@@ -1,7 +1,6 @@
 ##TODO: what leads to success section.... Correlation matrix... with the rating columns...?
 ##TODO: Button to reset all filters back to empty
 ##TODO: Better drop columns (drop more columns)... clean original df that is being displayed
-##TODO: Create some KPI's (under filers)
 ##TODO: How much will my airbnb make section.... Simple model that serves predictions (bedroom, bath, guests, ratings etc... to predict revenue over last 12 months.... probalistic modeling.. multiple models, etc )
 
 
@@ -84,8 +83,37 @@ app.layout = html.Div([
                 value=[df['baths'].min(), df['baths'].max()],
                 marks={i: str(i) for i in range(int(df['baths'].min()), int(df['baths'].max())+1)}
             )
-        ], className='filter-item')
+        ], className='filter-item'),
+
+        html.Div([
+        html.Button('Reset Filters', id='reset-button', n_clicks=0)
+    ], className='filter-item reset-button-container')
+
+
     ], className='filters-container'),
+
+
+    #KPI's
+    html.Div([
+        html.Div([
+            html.H4("Average Overall Rating"),
+            html.Div(id='avg-rating-display', className='metric-value')
+        ], className='metric-card'),
+
+        html.Div([
+        html.H4("Average Trailing 12 Mo Revenue"),
+        html.Div(id='ttm-revenue-display', className='metric-value')
+    ], className='metric-card'),
+
+    html.Div([
+        html.H4("Average Trailing 12 Mo Reserved Days"),
+        html.Div(id='ttm-reserved-days-display', className='metric-value')
+    ], className='metric-card'),
+
+
+
+
+    ], className='metrics-container'),
 
     # Element for the Datatable
     dash_table.DataTable(
@@ -111,7 +139,7 @@ app.layout = html.Div([
 
 ])
 
-
+# Filters
 @callback( # Decorator states that when one of the Inputs change, the function is ran
     Output('listings-table', 'data'),
     Input('listing-type-filter', 'value'),
@@ -143,6 +171,64 @@ def filter_table(listing_type, superhost, bedrooms_range, baths_range):
     ]
     
     return filtered_df.to_dict('records')
+
+# Reset Filters
+@callback(
+    Output('listing-type-filter', 'value'),
+    Output('superhost-filter', 'value'),
+    Output('bedrooms-filter', 'value'),
+    Output('baths-filter', 'value'),
+    Input('reset-button', 'n_clicks')
+)
+def reset_filters(n_clicks):
+    if n_clicks > 0:
+        return None, 'all', [df['bedrooms'].min(), df['bedrooms'].max()], [df['baths'].min(), df['baths'].max()]
+    return None, 'all', [df['bedrooms'].min(), df['bedrooms'].max()], [df['baths'].min(), df['baths'].max()]
+
+
+# KPIS
+@callback(
+    Output('avg-rating-display', 'children'),
+    Input('listings-table', 'data')
+)
+def update_avg_rating(filtered_data):
+    filtered_df = pd.DataFrame(filtered_data)
+    
+    # Calculate average rating, handling potential NaN values
+    if len(filtered_df) > 0 and 'rating_overall' in filtered_df.columns:
+        avg_rating = filtered_df['rating_overall'].mean()
+        if pd.notna(avg_rating):
+            return f"{avg_rating:.2f}"
+    
+    return "N/A"
+
+@callback(
+    Output('ttm-revenue-display', 'children'),
+    Input('listings-table', 'data')
+)
+def update_ttm_revenue(filtered_data):
+    filtered_df = pd.DataFrame(filtered_data)
+    
+    if len(filtered_df) > 0 and 'ttm_revenue' in filtered_df.columns:
+        avg_ttm_revenue = filtered_df['ttm_revenue'].mean()
+        if pd.notna(avg_ttm_revenue):
+            return f"${avg_ttm_revenue:,.0f}"
+    
+    return "N/A"
+
+@callback(
+    Output('ttm-reserved-days-display', 'children'),
+    Input('listings-table', 'data')
+)
+def update_ttm_reserved_days(filtered_data):
+    filtered_df = pd.DataFrame(filtered_data)
+    
+    if len(filtered_df) > 0 and 'ttm_reserved_days' in filtered_df.columns:
+        avg_ttm_reserved_days = filtered_df['ttm_reserved_days'].mean()
+        if pd.notna(avg_ttm_reserved_days):
+            return f"{avg_ttm_reserved_days:,.0f}"
+    
+    return "N/A"
 
 @callback(
     Output('row-count-display', 'children'),
