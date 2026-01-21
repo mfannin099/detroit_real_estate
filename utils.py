@@ -11,8 +11,11 @@ class DataCleaner:
 
     def drop_columns(self):
         cols_to_drop = ["cover_photo_url", "listing_id", "host_id", "host_name",
-                        "cohost_ids", "chost_names", 'registration', "instant_book",
+                        "cohost_ids", "cohost_names", 'registration', "instant_book",
                         "ttm_revenue_native", "ttm_blocked_days",  'ttm_revpar', 'ttm_revpar_native', 'ttm_adjusted_revpar',
+                        'ttm_avg_rate_native', 'ttm_occupancy', 'ttm_adjusted_occupancy',
+                        'ttm_revpar', 'ttm_revpar_native', 'ttm_adjusted_revpar',
+                        'ttm_adjusted_revpar_native', 'ttm_blocked_days'
                         'l90d_revenue', 'l90d_revenue_native', 'l90d_avg_rate', 'l90d_avg_rate_native',
                         'l90d_occupancy', 'l90d_adjusted_occupancy', 'l90d_revpar',
                         'l90d_revpar_native', 'l90d_adjusted_revpar',

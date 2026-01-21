@@ -1,5 +1,4 @@
 ##TODO: what leads to success section.... Correlation matrix... with the rating columns...?
-##TODO: Better drop columns (drop more columns)... clean original df that is being displayed
 ##TODO: How much will my airbnb make section.... Simple model that serves predictions (bedroom, bath, guests, ratings etc... to predict revenue over last 12 months.... probalistic modeling.. multiple models, etc )
 
 
@@ -108,9 +107,6 @@ app.layout = html.Div([
         html.Div(id='ttm-reserved-days-display', className='metric-value')
     ], className='metric-card'),
 
-
-
-
     ], className='metrics-container'),
 
     # Element for the Datatable
@@ -135,8 +131,19 @@ app.layout = html.Div([
         dcc.Graph(id='listings-map')
     ], className = 'map-container'),
 
+    html.Hr(),
+
+    # Correlation Matrix
+    html.Div([
+        html.H3("Rating & Revenue Correlation Matrix"),
+        dcc.Graph(id='correlation-matrix')
+    ], className='correlation-container'),
+
 ])
 
+
+
+# Begin Callbacks
 # Filters
 @callback( # Decorator states that when one of the Inputs change, the function is ran
     Output('listings-table', 'data'),
@@ -275,6 +282,65 @@ def update_map(filtered_data):
             size=12,  # Fixed size for all markers
             opacity=0.8,  # Slight transparency
         )
+    )
+    
+    return fig
+
+# Correlation Matrix
+@callback(
+    Output('correlation-matrix', 'figure'),
+    Input('listings-table', 'data')
+)
+def update_correlation_matrix(filtered_data):
+    filtered_df = pd.DataFrame(filtered_data)
+    
+    # Select only the columns we want for correlation
+    correlation_cols = [
+        'photos_count', 'bedrooms', 'baths',
+        'rating_overall', 'rating_accuracy', 'rating_checkin', 
+        'rating_cleanliness', 'rating_communication', 'rating_location', 
+        'rating_value', 'ttm_revenue'
+    ]
+    
+    # Filter to only include columns that exist in the dataframe
+    available_cols = [col for col in correlation_cols if col in filtered_df.columns]
+    
+    # Calculate correlation matrix
+    corr_matrix = filtered_df[available_cols].corr()
+
+    label_mapping = {
+    'photos_count': 'Photos',
+    'bedrooms': 'Bedrooms',
+    'baths': 'Bathrooms',
+    'rating_overall': 'Overall Rating',
+    'rating_accuracy': 'Accuracy',
+    'rating_checkin': 'Check-in',
+    'rating_cleanliness': 'Cleanliness',
+    'rating_communication': 'Communication',
+    'rating_location': 'Location',
+    'rating_value': 'Value',
+    'ttm_revenue': 'Revenue (12mo)'
+}
+
+    corr_matrix = corr_matrix.rename(columns=label_mapping, index=label_mapping)
+    
+    # Create heatmap
+    fig = px.imshow(
+        corr_matrix,
+        labels=dict(color="Correlation"),
+        x=corr_matrix.columns,
+        y=corr_matrix.columns,
+        color_continuous_scale='RdBu_r',  # Red-Blue colorscale (reversed)
+        zmin=-1,
+        zmax=1,
+        text_auto='.2f',  # Show correlation values with 2 decimals
+        aspect='auto'
+    )
+    
+    fig.update_layout(
+        title="Correlation between Ratings and Revenue",
+        height=600,
+        margin={"r": 20, "t": 60, "l": 20, "b": 20}
     )
     
     return fig
