@@ -7,7 +7,7 @@ import pandas as pd
 from utils import DataCleaner
  
 # Reading in data
-df = (DataCleaner("../data/airroi_listings.parquet")
+df = (DataCleaner("data/airroi_listings.parquet")
       .load_data()
       .drop_columns()
       .clean_columns()

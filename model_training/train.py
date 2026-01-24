@@ -23,3 +23,6 @@ df = (DataCleaner(data_path)
 
 print(df.head(3))
 print(df.columns)
+
+nan_counts = df.isnull().sum()
+print(nan_counts)
