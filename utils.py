@@ -27,7 +27,7 @@ class DataCleaner:
         self.df = self.df.drop(columns=cols_to_drop, errors='ignore')
         return self
 
-    def drop_columns_additional_ml_cols(self):
+    def drop_columns_additional_ml(self):
         cols_to_drop = ["listing_name", "latitude", "longitude", "extra_guest_fee",
         "amenities", 'cancellation_policy', 'currency', "ttm_avg_rate", 
         "ttm_reserved_days", 'ttm_available_days', 'ttm_total_days', 'l90d_revenue']
