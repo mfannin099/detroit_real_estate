@@ -4,12 +4,22 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 
-from ..utils import DataCleaner
+import sys
+import os
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, parent_dir)
 
-df = (DataCleaner("../data/airroi_listings.parquet")
+from utils import DataCleaner
+data_path = os.path.join(parent_dir, "data", "airroi_listings.parquet")
+
+df = (DataCleaner(data_path)
       .load_data()
       .drop_columns()
+      .drop_columns_additional_ml_cols()
       .clean_columns()
-      .get_final_df())
+      #.train_test(target_col='ttm_revenue', )
+      .get_final_df()
+      )
 
 print(df.head(3))
+print(df.columns)
