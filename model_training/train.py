@@ -21,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 # Begin ML Workflow
-X_train, X_test, y_train, y_test = (
-    DataCleaner(data_path)
+X_train, X_test, y_train, y_test = (DataCleaner(data_path)
     .load_data()
     .drop_columns()
     .drop_columns_ml()
@@ -46,3 +45,8 @@ logger.info(f"\n{X_test.isnull().sum()}")
 
 logger.info(f"Missing values in y_train: {y_train.isnull().sum()}")
 logger.info(f"Missing values in y_test: {y_test.isnull().sum()}")
+
+
+## TODO Linear Regression
+## TODO Random Forest
+## TODO XGBoost
