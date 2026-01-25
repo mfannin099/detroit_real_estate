@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 
 class DataCleaner:
     def __init__(self, path):
@@ -27,8 +29,8 @@ class DataCleaner:
         self.df = self.df.drop(columns=cols_to_drop, errors='ignore')
         return self
 
-    def drop_columns_additional_ml(self):
-        cols_to_drop = ["listing_name", "latitude", "longitude", "extra_guest_fee",
+    def drop_columns_ml(self):
+        cols_to_drop = ["guests", "listing_name", "latitude", "longitude", "extra_guest_fee",
         "amenities", 'cancellation_policy', 'currency', "ttm_avg_rate", 
         "ttm_reserved_days", 'ttm_available_days', 'ttm_total_days', 'l90d_revenue']
 
@@ -40,17 +42,32 @@ class DataCleaner:
         self.df['baths'] = self.df['baths'].fillna(0)
         return self
 
+    def clean_columns_ml(self):
+        self.df = self.df.fillna(0)
+        self.df['superhost'] = self.df['superhost'].map({True: 1, False: 0})
+        return self
+
     def get_final_df(self):
         return self.df
 
-    def train_test(self, target_col, test_size = .2, random_state = 0):
+    def train_test_ml(self, target_col, test_size = .2, random_state = 0):
         self.target_col = target_col
 
-        X = self.df.drop(columns=[target_column])
-        y = self.df[target_column]
+        X = self.df.drop(columns=[target_col])
+        y = self.df[target_col]
 
         X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=test_size, random_state=random_state
         )
+
+        # Label Encoding
+        le_listing = LabelEncoder()
+        X_train['listing_type'] = le_listing.fit_transform(X_train['listing_type'])
+        X_test['listing_type'] = le_listing.transform(X_test['listing_type'])
+
+        # Encode room_type
+        le_room = LabelEncoder()
+        X_train['room_type'] = le_room.fit_transform(X_train['room_type'])
+        X_test['room_type'] = le_room.transform(X_test['room_type'])
         
         return X_train, X_test, y_train, y_test

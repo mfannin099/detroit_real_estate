@@ -12,17 +12,14 @@ sys.path.insert(0, parent_dir)
 from utils import DataCleaner
 data_path = os.path.join(parent_dir, "data", "airroi_listings.parquet")
 
-df = (DataCleaner(data_path)
-      .load_data()
-      .drop_columns()
-      .drop_columns_additional_ml()
-      .clean_columns()
-      #.train_test(target_col='ttm_revenue', )
-      .get_final_df()
-      )
+X_train, X_test, y_train, y_test = (
+    DataCleaner(data_path)
+    .load_data()
+    .drop_columns()
+    .drop_columns_ml()
+    .clean_columns()
+    .clean_columns_ml()
+    .train_test_ml(target_col='ttm_revenue')
+)
 
-print(df.head(3))
-print(df.columns)
-
-nan_counts = df.isnull().sum()
-print(nan_counts)
+print(X_train.head())
