@@ -4,7 +4,7 @@ import os
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parent_dir)
 
-from utils import DataCleaner
+from utils import DataCleaner, LinearRegressionModel
 data_path = os.path.join(parent_dir, "data", "airroi_listings.parquet")
 
 import logging
@@ -21,6 +21,11 @@ logger = logging.getLogger(__name__)
 
 
 # Begin ML Workflow
+
+###################################
+################################### BEGIN Data Cleaning
+###################################
+
 X_train, X_test, y_train, y_test = (DataCleaner(data_path)
     .load_data()
     .drop_columns()
@@ -46,7 +51,27 @@ logger.info(f"\n{X_test.isnull().sum()}")
 logger.info(f"Missing values in y_train: {y_train.isnull().sum()}")
 logger.info(f"Missing values in y_test: {y_test.isnull().sum()}")
 
+###################################
+################################### END Data Cleaning
+###################################
+
 
 ## TODO Linear Regression
+
+###################################
+################################### END Linear Regression
+###################################
+
+model = (LinearRegressionModel()
+        .fit(X_train, y_train)
+)
+
+predictions = model.predict(X=X_test)
+print(predictions)
+
+###################################
+################################### END Linear Regression
+###################################
+
 ## TODO Random Forest
 ## TODO XGBoost

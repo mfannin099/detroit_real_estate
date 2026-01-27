@@ -2,6 +2,18 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+from sklearn.linear_model import LinearRegression
+
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('training.log'),
+        logging.StreamHandler()  # Also print to console
+    ]
+)
+logger = logging.getLogger(__name__)
 
 class DataCleaner:
     def __init__(self, path):
@@ -71,3 +83,32 @@ class DataCleaner:
         X_test['room_type'] = le_room.transform(X_test['room_type'])
         
         return X_train, X_test, y_train, y_test
+
+
+
+class LinearRegressionModel:
+
+    def __init__(self):
+        self.model = LinearRegression()
+        self.feature_names = None 
+
+    def fit(self, X_train, y_train):
+        
+        # List of the features used
+        self.feature_names = X_train.columns.tolist()
+        self.model.fit(X_train, y_train)
+        logger.info(f"Training complete with {len(self.feature_names)} features")
+
+        return self
+    
+    def predict(self, X):
+        try:
+            predictions = self.model.predict(X)
+            logger.info(f"Predictions complete with {len(X)}")
+            return predictions
+        
+        except Exception as e:
+            raise ValueError(
+                f"Prediction failed: {str(e)}. "
+                f"Expected features: {self.feature_names}"
+            )
