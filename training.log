@@ -713,3 +713,60 @@ dtype: int64
 2026-01-26 21:57:18,349 - utils - INFO -   R² (variance explained): 0.2067
 2026-01-26 21:57:18,350 - utils - INFO -   Samples evaluated:       54
 2026-01-26 21:57:18,350 - utils - INFO - ==================================================
+2026-01-26 21:58:59,790 - __main__ - INFO - Training set size: 216
+2026-01-26 21:58:59,791 - __main__ - INFO - Test set size: 54
+2026-01-26 21:58:59,791 - __main__ - INFO - y_train size: 216
+2026-01-26 21:58:59,791 - __main__ - INFO - y_test size: 54
+2026-01-26 21:58:59,791 - __main__ - INFO - Checking for missing values in X_train:
+2026-01-26 21:58:59,794 - __main__ - INFO - 
+listing_type            0
+room_type               0
+photos_count            0
+superhost               0
+bedrooms                0
+beds                    0
+baths                   0
+min_nights              0
+cleaning_fee            0
+num_reviews             0
+rating_overall          0
+rating_accuracy         0
+rating_checkin          0
+rating_cleanliness      0
+rating_communication    0
+rating_location         0
+rating_value            0
+dtype: int64
+2026-01-26 21:58:59,794 - __main__ - INFO - Checking for missing values in X_test:
+2026-01-26 21:58:59,796 - __main__ - INFO - 
+listing_type            0
+room_type               0
+photos_count            0
+superhost               0
+bedrooms                0
+beds                    0
+baths                   0
+min_nights              0
+cleaning_fee            0
+num_reviews             0
+rating_overall          0
+rating_accuracy         0
+rating_checkin          0
+rating_cleanliness      0
+rating_communication    0
+rating_location         0
+rating_value            0
+dtype: int64
+2026-01-26 21:58:59,796 - __main__ - INFO - Missing values in y_train: 0
+2026-01-26 21:58:59,796 - __main__ - INFO - Missing values in y_test: 0
+2026-01-26 21:58:59,800 - utils - INFO - Training complete with 17 features
+2026-01-26 21:58:59,802 - utils - INFO - Predictions complete with 54
+2026-01-26 21:58:59,803 - utils - INFO - ==================================================
+2026-01-26 21:58:59,803 - utils - INFO - MODEL EVALUATION METRICS
+2026-01-26 21:58:59,804 - utils - INFO - ==================================================
+2026-01-26 21:58:59,804 - utils - INFO -   RMSE (prediction error): $15,977.85
+2026-01-26 21:58:59,804 - utils - INFO -   MAE (avg error):         $11,299.54
+2026-01-26 21:58:59,804 - utils - INFO -   R² (variance explained): 0.2067
+2026-01-26 21:58:59,804 - utils - INFO -   Samples evaluated:       54
+2026-01-26 21:58:59,805 - utils - INFO - ==================================================
+2026-01-26 21:58:59,805 - __main__ - INFO - Model R² Score: 0.21

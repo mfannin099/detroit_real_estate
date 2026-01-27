@@ -67,6 +67,9 @@ model.fit(X_train, y_train)
 predictions = model.predict(X=X_test)
 model.evaluation(X=X_test,y=y_test,predictions=predictions)
 
+# Example calling the dictionary
+logger.info(f"Model R² Score: {model.metrics['r2_score']:.2f}")
+
 ###################################
 ################################### END Linear Regression
 ###################################
