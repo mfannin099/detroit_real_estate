@@ -62,12 +62,10 @@ logger.info(f"Missing values in y_test: {y_test.isnull().sum()}")
 ################################### END Linear Regression
 ###################################
 
-model = (LinearRegressionModel()
-        .fit(X_train, y_train)
-)
-
+model = LinearRegressionModel()
+model.fit(X_train, y_train)
 predictions = model.predict(X=X_test)
-print(predictions)
+model.evaluation(X=X_test,y=y_test,predictions=predictions)
 
 ###################################
 ################################### END Linear Regression

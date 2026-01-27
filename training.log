@@ -465,3 +465,251 @@ dtype: int64
 2026-01-26 21:31:57,605 - __main__ - INFO - Missing values in y_test: 0
 2026-01-26 21:31:57,609 - utils - INFO - Training complete with 17 features
 2026-01-26 21:31:57,611 - utils - INFO - Predictions complete with 54
+2026-01-26 21:54:06,459 - __main__ - INFO - Training set size: 216
+2026-01-26 21:54:06,461 - __main__ - INFO - Test set size: 54
+2026-01-26 21:54:06,461 - __main__ - INFO - y_train size: 216
+2026-01-26 21:54:06,461 - __main__ - INFO - y_test size: 54
+2026-01-26 21:54:06,461 - __main__ - INFO - Checking for missing values in X_train:
+2026-01-26 21:54:06,463 - __main__ - INFO - 
+listing_type            0
+room_type               0
+photos_count            0
+superhost               0
+bedrooms                0
+beds                    0
+baths                   0
+min_nights              0
+cleaning_fee            0
+num_reviews             0
+rating_overall          0
+rating_accuracy         0
+rating_checkin          0
+rating_cleanliness      0
+rating_communication    0
+rating_location         0
+rating_value            0
+dtype: int64
+2026-01-26 21:54:06,463 - __main__ - INFO - Checking for missing values in X_test:
+2026-01-26 21:54:06,465 - __main__ - INFO - 
+listing_type            0
+room_type               0
+photos_count            0
+superhost               0
+bedrooms                0
+beds                    0
+baths                   0
+min_nights              0
+cleaning_fee            0
+num_reviews             0
+rating_overall          0
+rating_accuracy         0
+rating_checkin          0
+rating_cleanliness      0
+rating_communication    0
+rating_location         0
+rating_value            0
+dtype: int64
+2026-01-26 21:54:06,466 - __main__ - INFO - Missing values in y_train: 0
+2026-01-26 21:54:06,466 - __main__ - INFO - Missing values in y_test: 0
+2026-01-26 21:54:06,469 - utils - INFO - Training complete with 17 features
+2026-01-26 21:54:06,471 - utils - INFO - Predictions complete with 54
+2026-01-26 21:55:43,754 - __main__ - INFO - Training set size: 216
+2026-01-26 21:55:43,754 - __main__ - INFO - Test set size: 54
+2026-01-26 21:55:43,754 - __main__ - INFO - y_train size: 216
+2026-01-26 21:55:43,755 - __main__ - INFO - y_test size: 54
+2026-01-26 21:55:43,755 - __main__ - INFO - Checking for missing values in X_train:
+2026-01-26 21:55:43,757 - __main__ - INFO - 
+listing_type            0
+room_type               0
+photos_count            0
+superhost               0
+bedrooms                0
+beds                    0
+baths                   0
+min_nights              0
+cleaning_fee            0
+num_reviews             0
+rating_overall          0
+rating_accuracy         0
+rating_checkin          0
+rating_cleanliness      0
+rating_communication    0
+rating_location         0
+rating_value            0
+dtype: int64
+2026-01-26 21:55:43,757 - __main__ - INFO - Checking for missing values in X_test:
+2026-01-26 21:55:43,759 - __main__ - INFO - 
+listing_type            0
+room_type               0
+photos_count            0
+superhost               0
+bedrooms                0
+beds                    0
+baths                   0
+min_nights              0
+cleaning_fee            0
+num_reviews             0
+rating_overall          0
+rating_accuracy         0
+rating_checkin          0
+rating_cleanliness      0
+rating_communication    0
+rating_location         0
+rating_value            0
+dtype: int64
+2026-01-26 21:55:43,759 - __main__ - INFO - Missing values in y_train: 0
+2026-01-26 21:55:43,760 - __main__ - INFO - Missing values in y_test: 0
+2026-01-26 21:55:43,763 - utils - INFO - Training complete with 17 features
+2026-01-26 21:55:43,765 - utils - INFO - Predictions complete with 54
+2026-01-26 21:56:36,865 - __main__ - INFO - Training set size: 216
+2026-01-26 21:56:36,865 - __main__ - INFO - Test set size: 54
+2026-01-26 21:56:36,865 - __main__ - INFO - y_train size: 216
+2026-01-26 21:56:36,865 - __main__ - INFO - y_test size: 54
+2026-01-26 21:56:36,865 - __main__ - INFO - Checking for missing values in X_train:
+2026-01-26 21:56:36,871 - __main__ - INFO - 
+listing_type            0
+room_type               0
+photos_count            0
+superhost               0
+bedrooms                0
+beds                    0
+baths                   0
+min_nights              0
+cleaning_fee            0
+num_reviews             0
+rating_overall          0
+rating_accuracy         0
+rating_checkin          0
+rating_cleanliness      0
+rating_communication    0
+rating_location         0
+rating_value            0
+dtype: int64
+2026-01-26 21:56:36,871 - __main__ - INFO - Checking for missing values in X_test:
+2026-01-26 21:56:36,874 - __main__ - INFO - 
+listing_type            0
+room_type               0
+photos_count            0
+superhost               0
+bedrooms                0
+beds                    0
+baths                   0
+min_nights              0
+cleaning_fee            0
+num_reviews             0
+rating_overall          0
+rating_accuracy         0
+rating_checkin          0
+rating_cleanliness      0
+rating_communication    0
+rating_location         0
+rating_value            0
+dtype: int64
+2026-01-26 21:56:36,874 - __main__ - INFO - Missing values in y_train: 0
+2026-01-26 21:56:36,875 - __main__ - INFO - Missing values in y_test: 0
+2026-01-26 21:56:36,878 - utils - INFO - Training complete with 17 features
+2026-01-26 21:56:36,879 - utils - INFO - Predictions complete with 54
+2026-01-26 21:56:54,068 - __main__ - INFO - Training set size: 216
+2026-01-26 21:56:54,068 - __main__ - INFO - Test set size: 54
+2026-01-26 21:56:54,068 - __main__ - INFO - y_train size: 216
+2026-01-26 21:56:54,068 - __main__ - INFO - y_test size: 54
+2026-01-26 21:56:54,068 - __main__ - INFO - Checking for missing values in X_train:
+2026-01-26 21:56:54,072 - __main__ - INFO - 
+listing_type            0
+room_type               0
+photos_count            0
+superhost               0
+bedrooms                0
+beds                    0
+baths                   0
+min_nights              0
+cleaning_fee            0
+num_reviews             0
+rating_overall          0
+rating_accuracy         0
+rating_checkin          0
+rating_cleanliness      0
+rating_communication    0
+rating_location         0
+rating_value            0
+dtype: int64
+2026-01-26 21:56:54,072 - __main__ - INFO - Checking for missing values in X_test:
+2026-01-26 21:56:54,074 - __main__ - INFO - 
+listing_type            0
+room_type               0
+photos_count            0
+superhost               0
+bedrooms                0
+beds                    0
+baths                   0
+min_nights              0
+cleaning_fee            0
+num_reviews             0
+rating_overall          0
+rating_accuracy         0
+rating_checkin          0
+rating_cleanliness      0
+rating_communication    0
+rating_location         0
+rating_value            0
+dtype: int64
+2026-01-26 21:56:54,074 - __main__ - INFO - Missing values in y_train: 0
+2026-01-26 21:56:54,074 - __main__ - INFO - Missing values in y_test: 0
+2026-01-26 21:56:54,078 - utils - INFO - Training complete with 17 features
+2026-01-26 21:56:54,080 - utils - INFO - Predictions complete with 54
+2026-01-26 21:57:18,337 - __main__ - INFO - Training set size: 216
+2026-01-26 21:57:18,337 - __main__ - INFO - Test set size: 54
+2026-01-26 21:57:18,337 - __main__ - INFO - y_train size: 216
+2026-01-26 21:57:18,338 - __main__ - INFO - y_test size: 54
+2026-01-26 21:57:18,338 - __main__ - INFO - Checking for missing values in X_train:
+2026-01-26 21:57:18,339 - __main__ - INFO - 
+listing_type            0
+room_type               0
+photos_count            0
+superhost               0
+bedrooms                0
+beds                    0
+baths                   0
+min_nights              0
+cleaning_fee            0
+num_reviews             0
+rating_overall          0
+rating_accuracy         0
+rating_checkin          0
+rating_cleanliness      0
+rating_communication    0
+rating_location         0
+rating_value            0
+dtype: int64
+2026-01-26 21:57:18,340 - __main__ - INFO - Checking for missing values in X_test:
+2026-01-26 21:57:18,341 - __main__ - INFO - 
+listing_type            0
+room_type               0
+photos_count            0
+superhost               0
+bedrooms                0
+beds                    0
+baths                   0
+min_nights              0
+cleaning_fee            0
+num_reviews             0
+rating_overall          0
+rating_accuracy         0
+rating_checkin          0
+rating_cleanliness      0
+rating_communication    0
+rating_location         0
+rating_value            0
+dtype: int64
+2026-01-26 21:57:18,341 - __main__ - INFO - Missing values in y_train: 0
+2026-01-26 21:57:18,343 - __main__ - INFO - Missing values in y_test: 0
+2026-01-26 21:57:18,345 - utils - INFO - Training complete with 17 features
+2026-01-26 21:57:18,347 - utils - INFO - Predictions complete with 54
+2026-01-26 21:57:18,347 - utils - INFO - ==================================================
+2026-01-26 21:57:18,349 - utils - INFO - MODEL EVALUATION METRICS
+2026-01-26 21:57:18,349 - utils - INFO - ==================================================
+2026-01-26 21:57:18,349 - utils - INFO -   RMSE (prediction error): $15,977.85
+2026-01-26 21:57:18,349 - utils - INFO -   MAE (avg error):         $11,299.54
+2026-01-26 21:57:18,349 - utils - INFO -   R² (variance explained): 0.2067
+2026-01-26 21:57:18,350 - utils - INFO -   Samples evaluated:       54
+2026-01-26 21:57:18,350 - utils - INFO - ==================================================

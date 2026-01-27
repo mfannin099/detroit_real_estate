@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 import logging
 logging.basicConfig(
@@ -91,6 +92,7 @@ class LinearRegressionModel:
     def __init__(self):
         self.model = LinearRegression()
         self.feature_names = None 
+        self.metrics = {}
 
     def fit(self, X_train, y_train):
         
@@ -112,3 +114,31 @@ class LinearRegressionModel:
                 f"Prediction failed: {str(e)}. "
                 f"Expected features: {self.feature_names}"
             )
+
+    def evaluation(self, X,y,predictions):
+
+        mse = mean_squared_error(y, predictions)
+        rmse = np.sqrt(mse)
+        mae = mean_absolute_error(y, predictions)
+        r2 = r2_score(y, predictions)
+
+        # Store metrics in the object
+        self.metrics = {
+            'rmse': rmse,
+            'mae': mae,
+            'r2_score': r2,
+            'mse': mse, 
+            'n_samples': len(X)
+        }
+
+        logger.info("="*50)
+        logger.info("MODEL EVALUATION METRICS")
+        logger.info("="*50)
+        logger.info(f"  RMSE (prediction error): ${rmse:,.2f}")
+        logger.info(f"  MAE (avg error):         ${mae:,.2f}")
+        logger.info(f"  R² (variance explained): {r2:.4f}")
+        logger.info(f"  Samples evaluated:       {len(X)}")
+        logger.info("="*50)
+
+        return self.metrics
+        
