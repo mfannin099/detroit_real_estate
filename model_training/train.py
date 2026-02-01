@@ -13,7 +13,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('training.log'),
+        #logging.FileHandler('training.log'),
         logging.StreamHandler()  # Also print to console
     ]
 )
@@ -69,6 +69,9 @@ model.evaluation(X=X_test,y=y_test,predictions=predictions)
 
 # Example calling the dictionary
 logger.info(f"Model R² Score: {model.metrics['r2_score']:.2f}")
+
+e = model.print_equation(precision=2)
+
 
 ###################################
 ################################### END Linear Regression

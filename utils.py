@@ -10,7 +10,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('training.log'),
+        # logging.FileHandler('training.log'),
         logging.StreamHandler()  # Also print to console
     ]
 )
@@ -142,3 +142,44 @@ class LinearRegressionModel:
 
         return self.metrics
         
+    def get_equation(self, precision=2):
+
+        if self.feature_names is None:
+            raise ValueError("Model must be fitted before getting equation")
+
+        intercept = self.model.intercept_
+        coefficients = self.model.coef_
+
+        equation = f"y = {intercept:.{precision}f}"
+    
+        # Add each term
+        for feature_name, coef in zip(self.feature_names, coefficients):
+            # Handle positive/negative signs properly
+            sign = "+" if coef >= 0 else "-"
+            equation += f" {sign} {abs(coef):.{precision}f}*{feature_name}"
+        
+        return equation
+
+    def print_equation(self, precision=2):
+
+        equation = self.get_equation(precision)
+        
+        logger.info("="*50)
+        logger.info("LINEAR REGRESSION EQUATION")
+        logger.info("="*50)
+        logger.info(equation)
+        logger.info("-"*50)
+        logger.info("Feature Coefficients:")
+        
+        # Show coefficients sorted by absolute value (importance)
+        coef_dict = dict(zip(self.feature_names, self.model.coef_))
+        sorted_coefs = sorted(coef_dict.items(), key=lambda x: abs(x[1]), reverse=True)
+        
+        for feature, coef in sorted_coefs:
+            logger.info(f"  {feature:20s}: {coef:+.{precision}f}")
+        
+        logger.info(f"  {'Intercept':20s}: {self.model.intercept_:+.{precision}f}")
+        logger.info("="*50)
+
+        return equation
+
