@@ -67,17 +67,18 @@ model.fit(X_train, y_train, features = ['rating_overall', 'bedrooms', 'baths'])
 predictions = model.predict(X=X_test)
 model.evaluation(X=X_test,y=y_test,predictions=predictions)
 
-# Example calling the dictionary
-logger.info(f"Model R² Score: {model.metrics['r2_score']:.2f}")
 
-e = model.print_equation(precision=2)
+# Base model with all features as an example
+# model2 = LinearRegressionModel()
+# model2.fit(X_train, y_train)
+# predictions = model2.predict(X=X_test)
+# model2.evaluation(X=X_test,y=y_test,predictions=predictions)
+# model2.print_equation(precision=2)
 
+# # Example calling the dictionary
+# logger.info(f"Model R² Score: {model2.metrics['r2_score']:.2f}")
 
-model2 = LinearRegressionModel()
-model2.fit(X_train, y_train)
-predictions = model2.predict(X=X_test)
-model2.evaluation(X=X_test,y=y_test,predictions=predictions)
-model2.print_equation(precision=2)
+# e = model2.print_equation(precision=2)
 
 
 ###################################
