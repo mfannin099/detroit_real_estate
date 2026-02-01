@@ -92,20 +92,29 @@ class LinearRegressionModel:
     def __init__(self):
         self.model = LinearRegression()
         self.feature_names = None 
+        self.selected_features = None
         self.metrics = {}
 
-    def fit(self, X_train, y_train):
+    def fit(self, X_train, y_train, features=None):
+
+        # Can call out what features are being used in the model class
+        if features is not None:
+            X_train_selected = X_train[features]
+        else:
+            X_train_selected = X_train
+
         
         # List of the features used
-        self.feature_names = X_train.columns.tolist()
-        self.model.fit(X_train, y_train)
+        self.feature_names = X_train_selected.columns.tolist()
+        self.model.fit(X_train_selected, y_train)
         logger.info(f"Training complete with {len(self.feature_names)} features")
 
         return self
     
     def predict(self, X):
         try:
-            predictions = self.model.predict(X)
+            X_selected = X[self.feature_names]
+            predictions = self.model.predict(X_selected)
             logger.info(f"Predictions complete with {len(X)}")
             return predictions
         

@@ -59,11 +59,11 @@ logger.info(f"Missing values in y_test: {y_test.isnull().sum()}")
 ## TODO Linear Regression
 
 ###################################
-################################### END Linear Regression
+################################### START Linear Regression
 ###################################
 
 model = LinearRegressionModel()
-model.fit(X_train, y_train)
+model.fit(X_train, y_train, features = ['rating_overall', 'bedrooms', 'baths'])
 predictions = model.predict(X=X_test)
 model.evaluation(X=X_test,y=y_test,predictions=predictions)
 
@@ -71,6 +71,13 @@ model.evaluation(X=X_test,y=y_test,predictions=predictions)
 logger.info(f"Model R² Score: {model.metrics['r2_score']:.2f}")
 
 e = model.print_equation(precision=2)
+
+
+model2 = LinearRegressionModel()
+model2.fit(X_train, y_train)
+predictions = model2.predict(X=X_test)
+model2.evaluation(X=X_test,y=y_test,predictions=predictions)
+model2.print_equation(precision=2)
 
 
 ###################################
