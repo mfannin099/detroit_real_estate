@@ -4,10 +4,17 @@
 from dash import Dash, html, dcc, dash_table, callback, Output, Input
 import plotly.express as px
 import pandas as pd
+import os
+import sys
 from utils import DataCleaner, LinearRegressionModel
+project_root = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, project_root)
+
+data_path = os.path.join(project_root, "data", "airroi_listings.parquet")
+model_path = os.path.join(project_root, "models", "linear_regression.pkl")
  
 # Reading in data
-df = (DataCleaner("data/airroi_listings.parquet")
+df = (DataCleaner(data_path)
       .load_data()
       .drop_columns()
       .clean_columns()
@@ -141,6 +148,93 @@ app.layout = html.Div([
         html.H3("Rating & Revenue Correlation Matrix"),
         dcc.Graph(id='correlation-matrix')
     ], className='correlation-container'),
+
+    html.Hr(),
+
+        html.Div([
+        html.H3("Predict Your Airbnb Revenue"),
+        html.P("Enter property details to estimate trailing 12-month revenue:", 
+               className='prediction-subtitle'),
+        
+        html.Div([
+            # Rating Overall
+            html.Div([
+                html.Label("Overall Rating:"),
+                dcc.Slider(
+                    id='predict-rating',
+                    min=1,
+                    max=5,
+                    step=0.5,
+                    value=4.5,
+                    marks={i: str(i) for i in range(1, 6)},
+                    tooltip={"placement": "bottom", "always_visible": True}
+                ),
+            ], className='prediction-input'),
+            
+            # Bedrooms
+            html.Div([
+                html.Label("Bedrooms:"),
+                dcc.Input(
+                    id='predict-bedrooms',
+                    type='number',
+                    value=2,
+                    min=0,
+                    max=10,
+                    className='prediction-number-input'
+                ),
+            ], className='prediction-input'),
+        ], className='prediction-row'),
+        
+        html.Div([
+            # Bathrooms
+            html.Div([
+                html.Label("Bathrooms:"),
+                dcc.Input(
+                    id='predict-baths',
+                    type='number',
+                    value=1,
+                    min=0,
+                    max=10,
+                    step=0.5,
+                    className='prediction-number-input'
+                ),
+            ], className='prediction-input'),
+            
+            # Listing Type
+            html.Div([
+                html.Label("Listing Type:"),
+                dcc.Dropdown(
+                    id='predict-listing-type',
+                    options=[{'label': lt, 'value': lt} for lt in df['listing_type'].unique()],
+                    value=df['listing_type'].iloc[0],
+                    clearable=False,
+                    className='prediction-dropdown'
+                ),
+            ], className='prediction-input'),
+        ], className='prediction-row'),
+        
+        # Predict Button
+        html.Div([
+            html.Button(
+                '🔮 Predict Revenue',
+                id='predict-button',
+                n_clicks=0,
+                className='predict-button'
+            ),
+        ], className='predict-button-container'),
+        
+        # Prediction Output
+        html.Div(id='prediction-output', className='prediction-output'),
+        
+        # Model Info
+        html.Div([
+            html.H4("📊 Model Information"),
+            html.P(f"Features: {', '.join(linearRegression.feature_names)}"),
+            html.P(f"R² Score: {linearRegression.metrics.get('r2_score', 0):.4f}" if linearRegression.metrics else ""),
+            html.P(f"RMSE: ${linearRegression.metrics.get('rmse', 0):,.2f}" if linearRegression.metrics else "")
+        ], className='model-info')
+        
+    ], className='prediction-container')
 
 ])
 
@@ -347,6 +441,72 @@ def update_correlation_matrix(filtered_data):
     )
     
     return fig
+
+# Prediction Callback
+@callback(
+    Output('prediction-output', 'children'),
+    Input('predict-button', 'n_clicks'),
+    Input('predict-rating', 'value'),
+    Input('predict-bedrooms', 'value'),
+    Input('predict-baths', 'value'),
+    Input('predict-listing-type', 'value')
+)
+def predict_revenue(n_clicks, rating, bedrooms, baths, listing_type):
+    """Make revenue prediction using the trained model."""
+    if n_clicks == 0:
+        return html.Div([
+            html.H3("👆 Enter property details above and click Predict")
+        ], className='prediction-placeholder')
+    
+    try:
+        # Prepare input data
+        input_dict = {
+            'rating_overall': rating,
+            'bedrooms': bedrooms,
+            'baths': baths,
+        }
+        
+        # Encode listing_type if encoder exists
+        if hasattr(linearRegression, 'encoders') and 'listing_type' in linearRegression.encoders:
+            try:
+                encoded_listing = linearRegression.encoders['listing_type'].transform([listing_type])[0]
+                input_dict['listing_type'] = encoded_listing
+            except ValueError:
+                input_dict['listing_type'] = 0
+        else:
+            listing_encoded = df[df['listing_type'] == listing_type]['listing_type'].iloc[0] if len(df[df['listing_type'] == listing_type]) > 0 else 0
+            input_dict['listing_type'] = listing_encoded
+        
+        # Create DataFrame
+        input_data = pd.DataFrame([input_dict])
+        
+        # Add any missing features the model needs
+        for feature in linearRegression.feature_names:
+            if feature not in input_data.columns:
+                input_data[feature] = 0
+        
+        # Ensure correct column order
+        input_data = input_data[linearRegression.feature_names]
+        
+        # Make prediction
+        prediction = linearRegression.predict(input_data)[0]
+        
+        # Display result
+        return html.Div([
+            html.H2(f"💰 Predicted Annual Revenue: ${prediction:,.2f}", 
+                   className='prediction-result-amount'),
+            html.Div([
+                html.P(f"⭐ Rating: {rating}/5 | 🛏️ {bedrooms} bed | 🛁 {baths} bath | 📋 {listing_type}"),
+            ], className='prediction-result-details')
+        ], className='prediction-result-success')
+    
+    except Exception as e:
+        return html.Div([
+            html.H3("⚠️ Prediction Error", className='prediction-error-title'),
+            html.P(str(e)),
+            html.Pre(f"Expected features: {linearRegression.feature_names}", 
+                    className='prediction-error-details')
+        ], className='prediction-result-error')
 
 
 if __name__ == '__main__': # This checks if you ran this file directly (like python app.py). If you imported this file into another file, this block won't run. (Per Claude)
