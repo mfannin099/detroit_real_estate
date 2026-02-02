@@ -205,3 +205,174 @@ hr {
     margin: 40px auto;
     padding: 0 50px;
 }
+
+/* Prediction Container */
+.prediction-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.prediction-subtitle {
+    text-align: center;
+    color: #5a6c7d;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+/* Prediction Input Rows */
+.prediction-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.prediction-input {
+    flex: 1;
+    padding: 10px;
+}
+
+.prediction-input label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.prediction-number-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.prediction-number-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+
+.prediction-dropdown {
+    width: 100%;
+}
+
+/* Predict Button */
+.predict-button-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.predict-button {
+    width: 200px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.predict-button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.predict-button:active {
+    transform: translateY(0);
+}
+
+/* Prediction Output */
+.prediction-output {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.prediction-placeholder {
+    color: #95a5a6;
+}
+
+.prediction-placeholder h3 {
+    color: #95a5a6;
+    font-weight: 500;
+}
+
+/* Prediction Result - Success */
+.prediction-result-success {
+    background-color: #e8f8f5;
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 20px;
+    border-left: 4px solid #27ae60;
+}
+
+.prediction-result-amount {
+    color: #27ae60;
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.prediction-result-details {
+    color: #7f8c8d;
+    font-size: 16px;
+}
+
+.prediction-result-details p {
+    margin: 0;
+}
+
+/* Prediction Result - Error */
+.prediction-result-error {
+    background-color: #fadbd8;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #e74c3c;
+}
+
+.prediction-error-title {
+    color: #e74c3c;
+    margin-bottom: 10px;
+}
+
+.prediction-error-details {
+    font-size: 12px;
+    color: #7f8c8d;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+/* Model Info */
+.model-info {
+    padding: 20px;
+    background-color: #ecf0f1;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+.model-info h4 {
+    color: #7f8c8d;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.model-info p {
+    color: #5a6c7d;
+    font-size: 14px;
+    margin: 8px 0;
+    text-align: center;
+}
