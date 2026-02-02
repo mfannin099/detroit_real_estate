@@ -63,9 +63,11 @@ logger.info(f"Missing values in y_test: {y_test.isnull().sum()}")
 ###################################
 
 model = LinearRegressionModel()
-model.fit(X_train, y_train, features = ['rating_overall', 'bedrooms', 'baths'])
+model.fit(X_train, y_train, features = ['rating_overall', 'bedrooms', 'baths', 'listing_type'])
 predictions = model.predict(X=X_test)
 model.evaluation(X=X_test,y=y_test,predictions=predictions)
+
+model.save_model('../models/linear_regression.pkl')
 
 
 # Base model with all features as an example

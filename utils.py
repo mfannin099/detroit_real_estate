@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LinearRegression
@@ -191,4 +192,18 @@ class LinearRegressionModel:
         logger.info("="*50)
 
         return equation
+
+    def save_model(self, filepath):
+        
+        if self.feature_names is None:
+            raise ValueError("Model must be fitted before saving")
+        
+        model_data = {
+            'model': self.model,
+            'feature_names': self.feature_names,
+            'metrics': self.metrics
+        }
+        
+        joblib.dump(model_data, filepath)
+        logger.info(f"Model saved to {filepath}")
 
