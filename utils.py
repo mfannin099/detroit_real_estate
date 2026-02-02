@@ -23,6 +23,7 @@ class DataCleaner:
         self.path = path
         self.df = None
         self.target_col = None
+        self.encoders = {}
     
     def load_data(self):
         self.df = pd.read_parquet(self.path)
@@ -75,15 +76,17 @@ class DataCleaner:
             X, y, test_size=test_size, random_state=random_state
         )
 
-        # Label Encoding
+        # Label Encoding for listing_type
         le_listing = LabelEncoder()
         X_train['listing_type'] = le_listing.fit_transform(X_train['listing_type'])
         X_test['listing_type'] = le_listing.transform(X_test['listing_type'])
+        self.encoders['listing_type'] = le_listing  # STORE 
 
         # Encode room_type
         le_room = LabelEncoder()
         X_train['room_type'] = le_room.fit_transform(X_train['room_type'])
         X_test['room_type'] = le_room.transform(X_test['room_type'])
+        self.encoders['room_type'] = le_room  # STORE 
         
         return X_train, X_test, y_train, y_test
 
@@ -199,6 +202,8 @@ class LinearRegressionModel:
         if self.feature_names is None:
             raise ValueError("Model must be fitted before saving")
         
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        
         model_data = {
             'model': self.model,
             'feature_names': self.feature_names,
@@ -217,7 +222,7 @@ class LinearRegressionModel:
         self.model = model_data['model']
         self.feature_names = model_data['feature_names']
         self.metrics = model_data.get('metrics', {})
-        self.encoders = model_data.get('encoders', {})  # Load encoders if they exist
+        self.encoders = model_data.get('encoders', {})
         
         logger.info(f"Model loaded from {filepath}")
         logger.info(f"Features: {self.feature_names}")

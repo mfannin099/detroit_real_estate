@@ -26,8 +26,9 @@ logger = logging.getLogger(__name__)
 ###################################
 ################################### BEGIN Data Cleaning
 ###################################
+ml_preprocessing = DataCleaner(data_path)
 
-X_train, X_test, y_train, y_test = (DataCleaner(data_path)
+X_train, X_test, y_train, y_test = (ml_preprocessing
     .load_data()
     .drop_columns()
     .drop_columns_ml()
@@ -51,6 +52,13 @@ logger.info(f"\n{X_test.isnull().sum()}")
 
 logger.info(f"Missing values in y_train: {y_train.isnull().sum()}")
 logger.info(f"Missing values in y_test: {y_test.isnull().sum()}")
+
+# Grabbing the encoding for dash app
+label_encoders = ml_preprocessing.encoders
+logger.info(f"Encoders available: {list(label_encoders.keys())}")
+for encoder_name, encoder in label_encoders.items():
+    logger.info(f"  {encoder_name}: {list(encoder.classes_)}")
+
 
 ###################################
 ################################### END Data Cleaning

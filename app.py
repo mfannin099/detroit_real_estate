@@ -4,7 +4,7 @@
 from dash import Dash, html, dcc, dash_table, callback, Output, Input
 import plotly.express as px
 import pandas as pd
-from utils import DataCleaner
+from utils import DataCleaner, LinearRegressionModel
  
 # Reading in data
 df = (DataCleaner("data/airroi_listings.parquet")
@@ -12,6 +12,10 @@ df = (DataCleaner("data/airroi_listings.parquet")
       .drop_columns()
       .clean_columns()
       .get_final_df())
+
+# Loading in Pickle File with Linear Regression Model
+linearRegression = LinearRegressionModel()
+linearRegression.load_model(filepath ='models/linear_regression.pkl')
 
 app = Dash(__name__) # creates your Dash application object. Think of it as turning on your dashboard. (Per Claude)
 
