@@ -1,6 +1,7 @@
 import numpy as np
 import sys
 import os
+from sklearn.preprocessing import LabelEncoder
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parent_dir)
 
@@ -56,8 +57,6 @@ logger.info(f"Missing values in y_test: {y_test.isnull().sum()}")
 ###################################
 
 
-## TODO Linear Regression
-
 ###################################
 ################################### START Linear Regression
 ###################################
@@ -66,8 +65,7 @@ model = LinearRegressionModel()
 model.fit(X_train, y_train, features = ['rating_overall', 'bedrooms', 'baths', 'listing_type'])
 predictions = model.predict(X=X_test)
 model.evaluation(X=X_test,y=y_test,predictions=predictions)
-
-model.save_model('../models/linear_regression.pkl')
+model.save_model('../models/linear_regression.pkl', encoders=label_encoders)
 
 
 # Base model with all features as an example

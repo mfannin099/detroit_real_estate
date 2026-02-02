@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import joblib
+import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LinearRegression
@@ -193,17 +194,35 @@ class LinearRegressionModel:
 
         return equation
 
-    def save_model(self, filepath):
-        
+    def save_model(self, filepath, encoders=None):
+
         if self.feature_names is None:
             raise ValueError("Model must be fitted before saving")
         
         model_data = {
             'model': self.model,
             'feature_names': self.feature_names,
-            'metrics': self.metrics
+            'metrics': self.metrics,
+            'encoders': encoders if encoders is not None else {}
         }
         
         joblib.dump(model_data, filepath)
         logger.info(f"Model saved to {filepath}")
+        if encoders:
+            logger.info(f"Encoders saved: {list(encoders.keys())}")
+
+    def load_model(self, filepath):
+        model_data = joblib.load(filepath)
+        
+        self.model = model_data['model']
+        self.feature_names = model_data['feature_names']
+        self.metrics = model_data.get('metrics', {})
+        self.encoders = model_data.get('encoders', {})  # Load encoders if they exist
+        
+        logger.info(f"Model loaded from {filepath}")
+        logger.info(f"Features: {self.feature_names}")
+        if self.encoders:
+            logger.info(f"Encoders loaded: {list(self.encoders.keys())}")
+        
+        return self
 
