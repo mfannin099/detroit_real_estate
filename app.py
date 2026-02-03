@@ -151,8 +151,9 @@ app.layout = html.Div([
 
     html.Hr(),
 
-        html.Div([
-        html.H3("Predict Your Airbnb Revenue"),
+    # Display/ Allow user to Predict Revenue
+    html.Div([
+        html.H3("Predict Your Airbnb Revenue for 12 Months"),
         html.P("Enter property details to estimate trailing 12-month revenue:", 
                className='prediction-subtitle'),
         
@@ -216,7 +217,7 @@ app.layout = html.Div([
         # Predict Button
         html.Div([
             html.Button(
-                '🔮 Predict Revenue',
+                'Predict Revenue',
                 id='predict-button',
                 n_clicks=0,
                 className='predict-button'
@@ -455,7 +456,7 @@ def predict_revenue(n_clicks, rating, bedrooms, baths, listing_type):
     """Make revenue prediction using the trained model."""
     if n_clicks == 0:
         return html.Div([
-            html.H3("👆 Enter property details above and click Predict")
+            html.H3("Enter property details above and click Predict")
         ], className='prediction-placeholder')
     
     try:
@@ -473,9 +474,6 @@ def predict_revenue(n_clicks, rating, bedrooms, baths, listing_type):
                 input_dict['listing_type'] = encoded_listing
             except ValueError:
                 input_dict['listing_type'] = 0
-        else:
-            listing_encoded = df[df['listing_type'] == listing_type]['listing_type'].iloc[0] if len(df[df['listing_type'] == listing_type]) > 0 else 0
-            input_dict['listing_type'] = listing_encoded
         
         # Create DataFrame
         input_data = pd.DataFrame([input_dict])
@@ -496,13 +494,13 @@ def predict_revenue(n_clicks, rating, bedrooms, baths, listing_type):
             html.H2(f"💰 Predicted Annual Revenue: ${prediction:,.2f}", 
                    className='prediction-result-amount'),
             html.Div([
-                html.P(f"⭐ Rating: {rating}/5 | 🛏️ {bedrooms} bed | 🛁 {baths} bath | 📋 {listing_type}"),
+                html.P(f" Rating: {rating}/5 | 🛏️ {bedrooms} bed | 🛁 {baths} bath | 📋 {listing_type}"),
             ], className='prediction-result-details')
         ], className='prediction-result-success')
     
     except Exception as e:
         return html.Div([
-            html.H3("⚠️ Prediction Error", className='prediction-error-title'),
+            html.H3(" Prediction Error", className='prediction-error-title'),
             html.P(str(e)),
             html.Pre(f"Expected features: {linearRegression.feature_names}", 
                     className='prediction-error-details')
